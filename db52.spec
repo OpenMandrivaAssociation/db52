@@ -568,6 +568,7 @@ rm -rf %{buildroot}
 %{_bindir}/db*_printlog
 %{_bindir}/db*_replicate
 %{_bindir}/db*_stat
+%{_bindir}/db*_tuner
 %{_bindir}/db*_upgrade
 %{_bindir}/db*_verify
 %if %{with sql}

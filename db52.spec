@@ -197,6 +197,13 @@ Requires:	%{libdbcxx} = %{EVRD}
 Provides:	db%{__soversion}-devel = %{EVRD}
 Provides:	libdb%{__soversion}-devel = %{EVRD}
 Conflicts:	db-devel < %{__soversion}
+Conflicts:	db4.8-devel
+Conflicts:	db4.7-devel
+Conflicts:	db4.6-devel
+Conflicts:	db4.5-devel
+Conflicts:	db4.4-devel
+Conflicts:	db4.3-devel
+Conflicts:	db4.2-devel
 Provides:	db-devel = %{EVRD}
 Provides:	db5-devel = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}

@@ -497,6 +497,7 @@ rm -rf %{buildroot}%{_includedir}/db_nss/db_cxx.h
 
 %if %{with sql}
 mv %{buildroot}%{_bindir}/{dbsql,db%{__soversion}_sql}
+%endif
 
 %clean
 rm -rf %{buildroot}

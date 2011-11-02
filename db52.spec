@@ -35,7 +35,7 @@
 Summary:	The Berkeley DB database library for C
 Name:		db52
 Version:	5.2.36
-Release:	1
+Release:	2
 Source0:	http://download.oracle.com/berkeley-db/db-%{version}.tar.gz
 # statically link db1 library
 Patch0:		db-5.1.19-db185.patch
@@ -495,6 +495,9 @@ aot-compile-rpm
 
 rm -rf %{buildroot}%{_includedir}/db_nss/db_cxx.h
 
+%if %{with sql}
+mv %{buildroot}%{_bindir}/{dbsql,db%{__soversion}_sql}
+
 %clean
 rm -rf %{buildroot}
 
@@ -573,7 +576,7 @@ rm -rf %{buildroot}
 %{_bindir}/db*_verify
 %if %{with sql}
 %doc docs/api_reference/C/dbsql.html
-%{_bindir}/dbsql
+%{_bindir}/db%{__soversion}_sql
 %endif
 
 %files -n %{name}_recover

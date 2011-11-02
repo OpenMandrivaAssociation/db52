@@ -454,8 +454,6 @@ popd
 %endif
 
 %install
-rm -rf %{buildroot}
-
 make -C build_unix install_setup install_include install_lib install_utilities \
 	DESTDIR=%{buildroot} emode=755
 
@@ -498,9 +496,6 @@ rm -rf %{buildroot}%{_includedir}/db_nss/db_cxx.h
 %if %{with sql}
 mv %{buildroot}%{_bindir}/{dbsql,db%{__soversion}_sql}
 %endif
-
-%clean
-rm -rf %{buildroot}
 
 %if %{with java}
 %post -n %{libdbjava}

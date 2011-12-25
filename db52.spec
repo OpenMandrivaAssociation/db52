@@ -35,7 +35,7 @@
 Summary:	The Berkeley DB database library for C
 Name:		db52
 Version:	5.2.36
-Release:	2
+Release:	3
 Source0:	http://download.oracle.com/berkeley-db/db-%{version}.tar.gz
 # statically link db1 library
 Patch0:		db-5.1.19-db185.patch
@@ -68,7 +68,6 @@ BuildRequires:	gcc-java
 BuildRequires:	java-gcj-compat-devel
 %endif
 %endif
-BuildRoot:	%{_tmppath}/%{name}-%{EVRD}-buildroot
 
 %description
 The Berkeley Database (Berkeley DB) is a programmatic toolkit that provides

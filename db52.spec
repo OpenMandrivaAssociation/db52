@@ -633,7 +633,7 @@ mv %{buildroot}%{_bindir}/{dbsql,db%{__soversion}_sql}
 %endif
 %{_libdir}/libdb_nss.so
 %{_libdir}/libdb_nss-5.so
-%{_libdir}/libdb_nss-%{__soversion}.la
+#%{_libdir}/libdb_nss-%{__soversion}.la
 %{_libdir}/libdb_nss-%{__soversion}.so
 %endif
 

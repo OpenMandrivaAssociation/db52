@@ -34,8 +34,8 @@
 
 Summary:	The Berkeley DB database library for C
 Name:		db52
-Version:	5.2.36
-Release:	3
+Version:	5.2.42
+Release:	1
 Source0:	http://download.oracle.com/berkeley-db/db-%{version}.tar.gz
 # statically link db1 library
 Patch0:		db-5.1.19-db185.patch
@@ -482,9 +482,9 @@ mkdir -p %{buildroot}%{_jnidir}
 mv %{buildroot}%{_libdir}/db.jar %{buildroot}%{_jnidir}/db%{__soversion}-%{version}.jar
 (cd %{buildroot}%{_jnidir} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
 
-%{__mkdir_p} %{buildroot}%{_javadocdir}/db%{__soversion}-%{version}
-%{__cp} -a lang/sql/jdbc/doc/* %{buildroot}%{_javadocdir}/db%{__soversion}-%{version}
-%{__ln_s} db%{__soversion}-%{version} %{buildroot}%{_javadocdir}/db%{__soversion}
+%__mkdir_p %{buildroot}%{_javadocdir}/db%{__soversion}-%{version}
+cp -a lang/sql/jdbc/doc/* %{buildroot}%{_javadocdir}/db%{__soversion}-%{version}
+%__ln_s db%{__soversion}-%{version} %{buildroot}%{_javadocdir}/db%{__soversion}
 
 %if %{gcj_support}
 rm -rf aot-compile-rpm
@@ -595,24 +595,19 @@ mv %{buildroot}%{_bindir}/{dbsql,db%{__soversion}_sql}
 %{_includedir}/db.h
 %{_libdir}/libdb.so
 %{_libdir}/libdb-5.so
-%{_libdir}/libdb-%{__soversion}.la
 %{_libdir}/libdb_cxx.so
 %{_libdir}/libdb_cxx-5.so
-%{_libdir}/libdb_cxx-%{__soversion}.la
 %if %{with sql}
 %{_libdir}/libdb_sql.so
 %{_libdir}/libdb_sql-5.so
-%{_libdir}/libdb_sql-%{__soversion}.la
 %endif
 %if %{with tcl}
 %{_libdir}/libdb_tcl.so
 %{_libdir}/libdb_tcl-5.so
-%{_libdir}/libdb_tcl-%{__soversion}.la
 %endif
 %if %{with java}
 %{_libdir}/libdb_java.so
 %{_libdir}/libdb_java-5.so
-%{_libdir}/libdb_java-%{__soversion}.la
 %endif
 
 %files -n %{libnamestatic}
@@ -633,8 +628,93 @@ mv %{buildroot}%{_bindir}/{dbsql,db%{__soversion}_sql}
 %endif
 %{_libdir}/libdb_nss.so
 %{_libdir}/libdb_nss-5.so
-#%{_libdir}/libdb_nss-%{__soversion}.la
 %{_libdir}/libdb_nss-%{__soversion}.so
 %endif
 
+
+
+
+%changelog
+* Thu Jan 05 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 5.2.36-3
++ Revision: 757929
+- remove libtool .la file that spec-helper removes from %%files..
+
+* Mon Nov 07 2011 Per Øyvind Karlsen <peroyvind@mandriva.org> 5.2.36-2
++ Revision: 727161
+- try workaround build issue with missing 'jni.h?\195?\166 by adding 'gcc-java'to
+  buildrequires
+- ditch redundant cleaning of buildroot
+- fix file conflict of /usr/bin/dbsql due to lack of versioning in filename
+
+* Thu Oct 13 2011 Per Øyvind Karlsen <peroyvind@mandriva.org> 5.2.36-1
++ Revision: 704613
+- new version
+
+* Fri Oct 07 2011 Per Øyvind Karlsen <peroyvind@mandriva.org> 5.2.28-1
++ Revision: 703522
+- add db52_tuner
+- drop old workaround for old gcc 4.6 issues, it'll now even break current build
+- add conflicts on more specific db-devel provides as older packages lacks
+  canonical one.. :|
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - import db52
+
+
+* Mon Jun 20 2011 Oden Eriksson <oeriksson@mandriva.com> 5.2.28-1
+- 5.2.28 (first blood)
+
+* Mon Apr 11 2011 Funda Wang <fwang@mandriva.org> 5.1.25-4
++ Revision: 652438
+- fix broken symbolic link on libdbjava
+
+* Wed Mar 30 2011 Per Øyvind Karlsen <peroyvind@mandriva.org> 5.1.25-3
++ Revision: 649243
+- don't disable optimizations on %%{i86}
+
+* Wed Mar 30 2011 Per Øyvind Karlsen <peroyvind@mandriva.org> 5.1.25-2
++ Revision: 649208
+- hastily disable compiler optimizations for %%{ix86} while debugging
+
+* Wed Mar 30 2011 Per Øyvind Karlsen <peroyvind@mandriva.org> 5.1.25-1
++ Revision: 649104
+- add buildrequires on libgcj-devel
+- disable gcj_support
+- work around gcc 4.6.0 optimizations that breaks stuff with rpm at least...
+- rename db5.1 package to libdbjava5.1
+- new version
+- enable systemtap per jbj request
+
+  + Matthew Dawkins <mattydaw@mandriva.org>
+    - added missing buildrequires for systemtap
+
+* Mon Nov 29 2010 Per Øyvind Karlsen <peroyvind@mandriva.org> 5.1.19-5mdv2011.0
++ Revision: 603124
+- ship with documentation for utils with them (man page conversion would be nice)
+- Enable the O_DIRECT flag for direct I/O.
+
+* Thu Nov 04 2010 Oden Eriksson <oeriksson@mandriva.com> 5.1.19-4mdv2011.0
++ Revision: 593334
+- rebuild
+
+  + Per Øyvind Karlsen <peroyvind@mandriva.org>
+    - force enabling dbm, otherwise it won't be enabled for some reason with db_nss
+
+* Sun Oct 31 2010 Per Øyvind Karlsen <peroyvind@mandriva.org> 5.1.19-3mdv2011.0
++ Revision: 591222
+- provide %%{name}-devel
+- build nss libs also with posix mutexes
+- rename '%%{name}-recover' sub-package to '%%{name}_recover'
+- split out db*_recover into a separate sub-package for rpm to require
+
+* Fri Oct 15 2010 Per Øyvind Karlsen <peroyvind@mandriva.org> 5.1.19-2mdv2011.0
++ Revision: 585735
+- enable build of sql
+- fix and do parallel install by default
+
+* Thu Oct 14 2010 Per Øyvind Karlsen <peroyvind@mandriva.org> 5.1.19-1mdv2011.0
++ Revision: 585727
+- cleanups (wouldn't hurt from aother round of cleanups in addition though...)
+- new release: 5.1.19
+- imported package db50
 

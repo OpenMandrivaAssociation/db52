@@ -35,7 +35,7 @@
 Summary:	The Berkeley DB database library for C
 Name:		db52
 Version:	5.2.42
-Release:	1
+Release:	2
 Source0:	http://download.oracle.com/berkeley-db/db-%{version}.tar.gz
 # statically link db1 library
 Patch0:		db-5.1.19-db185.patch
@@ -43,7 +43,7 @@ Patch1:		db-5.1.25-sql_flags.patch
 Patch2:		db-5.1.19-tcl-link.patch
 # fedora patches
 Patch101:	db-4.7.25-jni-include-dir.patch
-URL:		http://www.oracle.com/technology/software/products/berkeley-db/
+URL:		
 License:	BSD
 Group:		System/Libraries
 BuildRequires:	systemtap
@@ -56,7 +56,8 @@ BuildRequires:	tcl-devel
 %if %{with db1}
 BuildRequires:	db1-devel
 %endif
-BuildRequires:	ed libtool
+BuildRequires:	ed
+BuildRequires:	libtool
 %if %{with java}
 BuildRequires:	java-rpmbuild
 BuildRequires:	sharutils

@@ -48,7 +48,7 @@ License:	BSD
 Group:		System/Libraries
 BuildRequires:	systemtap
 %if %{with sql}
-BuildRequires:	sqlite3-devel
+BuildRequires:	pkgconfig(sqlite3)
 %endif
 %if %{with tcl}
 BuildRequires:	tcl-devel

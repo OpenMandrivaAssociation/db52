@@ -35,7 +35,7 @@
 Summary:	The Berkeley DB database library for C
 Name:		db52
 Version:	5.2.42
-Release:	2
+Release:	3
 Source0:	http://download.oracle.com/berkeley-db/db-%{version}.tar.gz
 # statically link db1 library
 Patch0:		db-5.1.19-db185.patch

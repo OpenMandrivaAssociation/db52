@@ -47,7 +47,6 @@ URL:		http://www.oracle.com/technology/software/products/berkeley-db/
 License:	BSD
 Group:		System/Libraries
 BuildRequires:	systemtap
-BuildRequires:	gcc-devel
 %if %{with sql}
 BuildRequires:	pkgconfig(sqlite3)
 %endif

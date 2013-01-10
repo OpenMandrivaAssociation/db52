@@ -1,36 +1,36 @@
-%define	__soversion	5.2
-%define	_libdb_a	libdb-%{__soversion}.a
-%define	_libcxx_a	libdb_cxx-%{__soversion}.a
+%define __soversion 5.2
+%define _libdb_a libdb-%{__soversion}.a
+%define _libcxx_a libdb_cxx-%{__soversion}.a
 
-%define libname_orig	%mklibname db
-%define libname		%{libname_orig}%{__soversion}
-%define libnamedev	%{libname}-devel
-%define libnamestatic	%{libname}-static-devel
+%define libname_orig %mklibname db
+%define libname %{libname_orig}%{__soversion}
+%define libnamedev %{libname}-devel
+%define libnamestatic %{libname}-static-devel
 
-%define libdbcxx	%{libname_orig}cxx%{__soversion}
-%define libdbsql	%{libname_orig}sql%{__soversion}
-%define libdbtcl	%{libname_orig}tcl%{__soversion}
-%define libdbjava	%{libname_orig}java%{__soversion}
+%define libdbcxx %{libname_orig}cxx%{__soversion}
+%define libdbsql %{libname_orig}sql%{__soversion}
+%define libdbtcl %{libname_orig}tcl%{__soversion}
+%define libdbjava %{libname_orig}java%{__soversion}
 
-%define libdbnss	%{libname_orig}nss%{__soversion}
-%define libdbnssdev	%{libdbnss}-devel
+%define libdbnss %{libname_orig}nss%{__soversion}
+%define libdbnssdev %{libdbnss}-devel
 
 %ifnarch %[mips} %{arm}
 %bcond_without java
 %define gcj_support 0
 %endif
 
-%bcond_without	sql
-%bcond_without	tcl
-%bcond_without	db1
+%bcond_without sql
+%bcond_without tcl
+%bcond_without db1
 # Define to build a stripped down version to use for nss libraries
-%bcond_without	nss
+%bcond_without nss
 
 # Define to rename utilities and allow parallel installation
-%bcond_without	parallel
+%bcond_without parallel
 
 # mutexes defaults to POSIX/pthreads/library
-%bcond_with	asmmutex
+%bcond_with asmmutex
 
 Summary:	The Berkeley DB database library for C
 Name:		db52
@@ -47,6 +47,7 @@ URL:		http://www.oracle.com/technology/software/products/berkeley-db/
 License:	BSD
 Group:		System/Libraries
 BuildRequires:	systemtap
+BuildRequires:	gcc-devel
 %if %{with sql}
 BuildRequires:	pkgconfig(sqlite3)
 %endif
@@ -152,7 +153,7 @@ This package contains the header files, libraries, and documentation for
 building tcl programs which use Berkeley DB.
 %endif
 
-%package	utils
+%package utils
 Summary:	Command line tools for managing Berkeley DB databases
 Group:		Databases
 %if !%{with parallel}

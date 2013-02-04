@@ -35,7 +35,7 @@
 Summary:	The Berkeley DB database library for C
 Name:		db52
 Version:	5.2.42
-Release:	4
+Release:	5
 Source0:	http://download.oracle.com/berkeley-db/db-%{version}.tar.gz
 # statically link db1 library
 Patch0:		db-5.1.19-db185.patch
@@ -46,6 +46,7 @@ Patch101:	db-4.7.25-jni-include-dir.patch
 URL:		http://www.oracle.com/technology/software/products/berkeley-db/
 License:	BSD
 Group:		System/Libraries
+BuildConflicts:	libreoffice-core
 BuildRequires:	systemtap
 %if %{with sql}
 BuildRequires:	pkgconfig(sqlite3)

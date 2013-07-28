@@ -34,7 +34,7 @@
 Summary:	The Berkeley DB database library for C
 Name:		%{sname}%{binext}
 Version:	5.2.42
-Release:	6
+Release:	7
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.oracle.com/technology/software/products/berkeley-db/
@@ -49,7 +49,7 @@ Patch101:	db-4.7.25-jni-include-dir.patch
 BuildConflicts:	libreoffice-core
 BuildRequires:	ed
 BuildRequires:	libtool
-BuildRequires:	systemtap
+BuildRequires:	systemtap-devel
 %if %{with sql}
 BuildRequires:	pkgconfig(sqlite3)
 %endif

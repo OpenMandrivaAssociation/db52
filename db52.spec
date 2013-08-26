@@ -1,4 +1,4 @@
-define sname	db
+%define sname	db
 %define api	5.2
 %define binext	%(echo %{api} | sed -e 's|\\.||g')
 
@@ -159,7 +159,7 @@ Group:		Databases
 This is a minimal package that ships with '%{name}_recover' only as it's
 required for using "RPM ACID".
 
-%package	uclibc-%{name}-utils
+%package	-n uclibc-%{name}-utils
 Summary:	Command line tools for managing Berkeley DB databases
 Group:		Databases
 Provides:	uclibc-db-utils = %{api}
@@ -167,7 +167,7 @@ Provides:	uclibc-db-utils = %{api}
 Conflicts:	uclibc-db-utils < %{api}
 %endif
 
-%description	uclibc-%{name}-utils
+%description	-n uclibc-%{name}-utils
 This package contains command line tools for managing Berkeley DB databases.
 
 %package -n	%{devname}
@@ -300,6 +300,9 @@ CONFIGURE_TOP="$PWD/dist"
 mkdir -p build_uclibc
 pushd build_uclibc
 %uclibc_configure \
+%if %{with parallel}
+	--program-transform-name='s,db_,db%{binext}_,' \
+%endif
 	--includedir=%{_includedir}/%{name} \
 	--enable-shared \
 	--disable-static \
@@ -319,8 +322,11 @@ popd
 %endif
 
 pushd build_unix
-CONFIGURE_TOP="../dist" \
+CONFIGURE_TOP="../dist"
 %configure2_5x \
+%if %{with parallel}
+	--program-transform-name='s,db_,db%{binext}_,' \
+%endif
 	--includedir=%{_includedir}/%{name} \
 	--enable-shared \
 	--enable-static \
@@ -389,7 +395,6 @@ popd
 %if %{with nss}
 mkdir build_nss
 pushd build_nss
-CONFIGURE_TOP="../dist" \
 %configure2_5x \
 	--includedir=%{_includedir}/db_nss \
 	--enable-shared \
@@ -451,12 +456,6 @@ popd
 %install
 %if %{with uclibc}
 make -C build_uclibc install_lib install_utilities DESTDIR=%{buildroot}
-# XXX This is needed for parallel install with db4.2
-%if %{with parallel}
-for F in %{buildroot}%{uclibc_root}%{_bindir}/*db_* ; do
-	mv $F `echo $F | sed -e 's,db_,%{name}_,'`
-done
-%endif
 %endif
 make -C build_unix install_setup install_include install_lib install_utilities \
 	DESTDIR=%{buildroot} emode=755
@@ -471,13 +470,6 @@ ln -s  /%{_lib}/libdb_nss-%{api}.so %{buildroot}%{_libdir}
 %endif
 
 ln -sf %{name}/db.h %{buildroot}%{_includedir}/db.h
-
-# XXX This is needed for parallel install with db4.2
-%if %{with parallel}
-for F in %{buildroot}%{_bindir}/*db_* ; do
-	mv $F `echo $F | sed -e 's,db_,%{name}_,'`
-done
-%endif
 
 # Move db.jar file to the correct place, and version it
 %if %{with java}
@@ -579,7 +571,7 @@ mv %{buildroot}%{_bindir}/{dbsql,db%{api}_sql}
 %endif
 
 %if %{with uclibc}
-%files uclibc-%{name}-utils
+%files -n uclibc-%{name}-utils
 %{uclibc_root}%{_bindir}/%{name}_archive
 %{uclibc_root}%{_bindir}/%{name}_checkpoint
 %{uclibc_root}%{_bindir}/%{name}_deadlock

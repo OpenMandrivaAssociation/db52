@@ -46,7 +46,6 @@ Patch2:		db-5.1.19-tcl-link.patch
 # fedora patches
 Patch101:	db-4.7.25-jni-include-dir.patch
 
-BuildConflicts:	libreoffice-core
 BuildRequires:	ed
 BuildRequires:	libtool
 BuildRequires:	systemtap-devel

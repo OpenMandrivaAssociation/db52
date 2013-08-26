@@ -1,4 +1,4 @@
-%define sname	db
+define sname	db
 %define api	5.2
 %define binext	%(echo %{api} | sed -e 's|\\.||g')
 
@@ -167,7 +167,7 @@ Provides:	uclibc-db-utils = %{api}
 Conflicts:	uclibc-db-utils < %{api}
 %endif
 
-%description	utils
+%description	uclibc-%{name}-utils
 This package contains command line tools for managing Berkeley DB databases.
 
 %package -n	%{devname}

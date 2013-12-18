@@ -14,7 +14,7 @@
 %define libdbnss	%mklibname %{sname}nss %{api}
 %define devdbnss	%mklibname %{sname}nss %{api} -d
 
-%ifnarch %[mips} %{arm}
+%ifnarch %[mips} %{arm} aarch64
 %bcond_without java
 %define gcj_support 0
 %endif
@@ -45,6 +45,7 @@ Patch1:		db-5.1.25-sql_flags.patch
 Patch2:		db-5.1.19-tcl-link.patch
 # fedora patches
 Patch101:	db-4.7.25-jni-include-dir.patch
+Patch102:	db52-aarch64.patch
 
 BuildRequires:	ed
 BuildRequires:	libtool

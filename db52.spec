@@ -14,8 +14,8 @@
 %define libdbnss	%mklibname %{sname}nss %{api}
 %define devdbnss	%mklibname %{sname}nss %{api} -d
 
-%ifnarch %[mips} %{arm}
-%bcond_without java
+%ifnarch %[mips} %{arm} aarch64
+%bcond_with java
 %define gcj_support 0
 %endif
 
@@ -35,7 +35,7 @@
 Summary:	The Berkeley DB database library for C
 Name:		%{sname}%{binext}
 Version:	5.2.42
-Release:	8
+Release:	12
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.oracle.com/technology/software/products/berkeley-db/
@@ -46,6 +46,7 @@ Patch1:		db-5.1.25-sql_flags.patch
 Patch2:		db-5.1.19-tcl-link.patch
 # fedora patches
 Patch101:	db-4.7.25-jni-include-dir.patch
+Patch102:	db52-aarch64.patch
 
 BuildRequires:	ed
 BuildRequires:	libtool

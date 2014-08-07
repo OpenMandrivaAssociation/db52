@@ -1,18 +1,18 @@
-%define sname	db
-%define api	5.2
-%define binext	%(echo %{api} | sed -e 's|\\.||g')
+%define sname db
+%define api 5.2
+%define binext %(echo %{api} | sed -e 's|\\.||g')
 
-%define libname		%mklibname %{sname} %{api}
-%define devname		%mklibname %{sname} %{api} -d
-%define statname	%mklibname %{sname} %{api} -s -d
+%define libname %mklibname %{sname} %{api}
+%define devname %mklibname %{sname} %{api} -d
+%define statname %mklibname %{sname} %{api} -s -d
 
-%define libdbcxx	%mklibname %{sname}cxx %{api}
-%define libdbsql	%mklibname %{sname}sql %{api}
-%define libdbtcl	%mklibname %{sname}tcl %{api}
-%define libdbjava	%mklibname %{sname}java %{api}
+%define libdbcxx %mklibname %{sname}cxx %{api}
+%define libdbsql %mklibname %{sname}sql %{api}
+%define libdbtcl %mklibname %{sname}tcl %{api}
+%define libdbjava %mklibname %{sname}java %{api}
 
-%define libdbnss	%mklibname %{sname}nss %{api}
-%define devdbnss	%mklibname %{sname}nss %{api} -d
+%define libdbnss %mklibname %{sname}nss %{api}
+%define devdbnss %mklibname %{sname}nss %{api} -d
 
 %ifnarch %[mips} %{arm} aarch64
 %bcond_with java
@@ -44,6 +44,7 @@ Source0:	http://download.oracle.com/berkeley-db/db-%{version}.tar.gz
 Patch0:		db-5.1.19-db185.patch
 Patch1:		db-5.1.25-sql_flags.patch
 Patch2:		db-5.1.19-tcl-link.patch
+Patch3:		db-5.2.42-atomic.patch
 # fedora patches
 Patch101:	db-4.7.25-jni-include-dir.patch
 Patch102:	db52-aarch64.patch
@@ -323,7 +324,7 @@ popd
 
 pushd build_unix
 CONFIGURE_TOP="../dist"
-%configure2_5x \
+%configure \
 %if %{with parallel}
 	--program-transform-name='s,db_,db%{binext}_,' \
 %endif
@@ -395,7 +396,7 @@ popd
 %if %{with nss}
 mkdir build_nss
 pushd build_nss
-%configure2_5x \
+%configure \
 	--includedir=%{_includedir}/db_nss \
 	--enable-shared \
 	--disable-static \

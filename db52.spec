@@ -235,7 +235,8 @@ rm -r lang/sql/jdbc/doc
 %apply_patches
 
 pushd dist
-libtoolize --copy --force
+%define __libtoolize    /bin/true
+#libtoolize --copy --force
 cat %{_datadir}/aclocal/libtool.m4 >> aclocal.m4
 popd
 

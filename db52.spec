@@ -235,8 +235,7 @@ rm -r lang/sql/jdbc/doc
 %apply_patches
 
 pushd dist
-%define __libtoolize    /bin/true
-#libtoolize --copy --force
+libtoolize --copy --force
 cat %{_datadir}/aclocal/libtool.m4 >> aclocal.m4
 popd
 
@@ -281,6 +280,8 @@ cd dist
 ./s_config
 
 %build
+export CC=gcc
+export CXX=g++
 %ifarch ppc
 CFLAGS="$CFLAGS -D_GNU_SOURCE -D_REENTRANT"
 %endif

@@ -329,6 +329,7 @@ CONFIGURE_TOP="../dist"
 	--program-transform-name='s,db_,db%{binext}_,' \
 %endif
 	--includedir=%{_includedir}/%{name} \
+    --enable-dtrace \
 	--enable-shared \
 	--enable-static \
 	--enable-dbm \

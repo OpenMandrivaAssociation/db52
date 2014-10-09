@@ -280,8 +280,6 @@ cd dist
 ./s_config
 
 %build
-export CC=gcc
-export CXX=g++
 %ifarch ppc
 CFLAGS="$CFLAGS -D_GNU_SOURCE -D_REENTRANT"
 %endif
@@ -320,7 +318,7 @@ pushd build_uclibc
 	--disable-java \
 	--enable-posixmutexes \
 	--with-mutex=POSIX/pthreads/library
-	%make
+%make
 popd
 %endif
 

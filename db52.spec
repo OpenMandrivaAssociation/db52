@@ -15,7 +15,7 @@
 %define devdbnss %mklibname %{sname}nss %{api} -d
 
 %ifnarch %[mips} %{arm} aarch64
-%bcond_with java
+%bcond_without java
 %define gcj_support 0
 %endif
 
@@ -51,7 +51,7 @@ Patch102:	db52-aarch64.patch
 
 BuildRequires:	ed
 BuildRequires:	libtool
-BuildRequires:	systemtap-devel
+#BuildRequires:	systemtap-devel
 %if %{with sql}
 BuildRequires:	pkgconfig(sqlite3)
 %endif
@@ -63,6 +63,7 @@ BuildRequires:	db1-devel
 %endif
 %if %{with java}
 BuildRequires:	java-rpmbuild
+BuildRequires:	java-devel
 BuildRequires:	sharutils
 # required for jni.h
 BuildRequires:	gcj-devel
@@ -329,11 +330,10 @@ CONFIGURE_TOP="../dist"
 	--program-transform-name='s,db_,db%{binext}_,' \
 %endif
 	--includedir=%{_includedir}/%{name} \
-    --enable-dtrace \
 	--enable-shared \
 	--enable-static \
 	--enable-dbm \
-	--enable-systemtap \
+	--disable-systemtap \
 	--enable-o_direct \
 %if %{with sql}
 	--enable-sql \
@@ -402,7 +402,7 @@ pushd build_nss
 	--enable-shared \
 	--disable-static \
 	--enable-dbm \
-	--enable-systemtap \
+	--disable-systemtap \
 	--enable-o_direct \
 	--disable-tcl \
 	--disable-cxx \

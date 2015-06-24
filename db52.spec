@@ -106,7 +106,7 @@ Group:		Development/Databases
 Requires:	uclibc-%{libname} = %{EVRD}
 Requires:	%{devname} = %{EVRD}
 Provides:	uclibc-%{name}-devel = %{EVRD}
-Conflicts:	%{devname} < 5.2.42-27
+Conflicts:	%{devname} < 5.2.42-17
 
 %description -n	uclibc-%{devname}
 This package contains the header files, libraries, and documentation for

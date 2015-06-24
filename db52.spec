@@ -32,11 +32,12 @@
 Summary:	The Berkeley DB database library for C
 Name:		%{sname}%{binext}
 Version:	5.2.42
-Release:	16
+Release:	17
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.oracle.com/technology/software/products/berkeley-db/
 Source0:	http://download.oracle.com/berkeley-db/db-%{version}.tar.gz
+Source1:	%{name}.rpmlintrc
 # statically link db1 library
 Patch0:		db-5.1.19-db185.patch
 Patch1:		db-5.1.25-sql_flags.patch
@@ -80,12 +81,37 @@ Group:		System/Libraries
 %description -n	%{libname}
 This package contains the shared library required by Berkeley DB.
 
+%if %{with uclibc}
+%package -n	uclibc-%{name}-utils
+Summary:	Command line tools for managing Berkeley DB databases
+Group:		Databases
+Provides:	uclibc-db-utils = %{api}
+%if !%{with parallel}
+Conflicts:	uclibc-db-utils < %{api}
+%endif
+
+%description -n uclibc-%{name}-utils
+This package contains command line tools for managing Berkeley DB databases.
+
 %package -n	uclibc-%{libname}
 Summary:	The Berkeley DB database library for C (uClibc build)
 Group:		System/Libraries
 
-%description -n	%{libname}
+%description -n	uclibc-%{libname}
 This package contains the shared library required by Berkeley DB.
+
+%package -n	uclibc-%{devname}
+Summary:	Development libraries/header files for the Berkeley DB library
+Group:		Development/Databases
+Requires:	uclibc-%{libname} = %{EVRD}
+Requires:	%{devname} = %{EVRD}
+Provides:	uclibc-%{name}-devel = %{EVRD}
+Conflicts:	%{devname} < 5.2.42-27
+
+%description -n	uclibc-%{devname}
+This package contains the header files, libraries, and documentation for
+building programs which use Berkeley DB.
+%endif
 
 %package -n	%{libdbcxx}
 Summary:	The Berkeley DB database library for C++
@@ -151,24 +177,10 @@ Group:		Databases
 This is a minimal package that ships with '%{name}_recover' only as it's
 required for using "RPM ACID".
 
-%package	-n uclibc-%{name}-utils
-Summary:	Command line tools for managing Berkeley DB databases
-Group:		Databases
-Provides:	uclibc-db-utils = %{api}
-%if !%{with parallel}
-Conflicts:	uclibc-db-utils < %{api}
-%endif
-
-%description	-n uclibc-%{name}-utils
-This package contains command line tools for managing Berkeley DB databases.
-
 %package -n	%{devname}
 Summary:	Development libraries/header files for the Berkeley DB library
 Group:		Development/Databases
 Requires:	%{libname} = %{EVRD}
-%if %{with uclibc}
-Requires:	uclibc-%{libname} = %{EVRD}
-%endif
 %if %{with sql}
 Requires:	%{libdbsql} = %{EVRD}
 %endif
@@ -564,6 +576,10 @@ mv %{buildroot}%{_bindir}/{dbsql,db%{api}_sql}
 %{uclibc_root}%{_bindir}/%{name}_tuner
 %{uclibc_root}%{_bindir}/%{name}_upgrade
 %{uclibc_root}%{_bindir}/%{name}_verify
+
+%files -n uclibc-%{devname}
+%{uclibc_root}%{_libdir}/libdb.so
+%{uclibc_root}%{_libdir}/libdb-5.so
 %endif
 
 %files -n %{name}_recover
@@ -584,10 +600,6 @@ mv %{buildroot}%{_bindir}/{dbsql,db%{api}_sql}
 %{_includedir}/db.h
 %{_libdir}/libdb.so
 %{_libdir}/libdb-5.so
-%if %{with uclibc}
-%{uclibc_root}%{_libdir}/libdb.so
-%{uclibc_root}%{_libdir}/libdb-5.so
-%endif
 %{_libdir}/libdb_cxx.so
 %{_libdir}/libdb_cxx-5.so
 %if %{with sql}

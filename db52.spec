@@ -16,7 +16,7 @@
 
 %bcond_with java
 
-%bcond_without uclibc
+%bcond_with uclibc
 %bcond_without sql
 %bcond_without tcl
 %bcond_without db1
@@ -32,7 +32,7 @@
 Summary:	The Berkeley DB database library for C
 Name:		%{sname}%{binext}
 Version:	5.2.42
-Release:	18
+Release:	19
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.oracle.com/technology/software/products/berkeley-db/

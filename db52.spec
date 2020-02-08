@@ -245,7 +245,11 @@ set +x	# XXX painful to watch
 fixup_href `find . -name "*.html"`
 set -x	# XXX painful to watch
 
+cp -f %{_datadir}/libtool/config/config.{sub,guess} lang/sql/jdbc
+cp -f %{_datadir}/libtool/config/config.{sub,guess} lang/sql/sqlite
+cp -f %{_datadir}/libtool/config/config.{sub,guess} lang/sql/odbc
 cd dist
+cp -f %{_datadir}/libtool/config/config.{sub,guess} .
 ./s_config
 
 %build

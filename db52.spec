@@ -36,7 +36,7 @@ Version:	5.2.42
 Release:	25
 License:	BSD
 Group:		System/Libraries
-Url:		http://www.oracle.com/technology/software/products/berkeley-db/
+Url:		https://www.oracle.com/technology/software/products/berkeley-db/
 Source0:	http://download.oracle.com/berkeley-db/db-%{version}.tar.gz
 Source1:	%{name}.rpmlintrc
 # statically link db1 library

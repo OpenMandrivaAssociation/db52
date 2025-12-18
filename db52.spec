@@ -48,6 +48,7 @@ Patch3:		db-5.2.42-atomic.patch
 Patch101:	db-4.7.25-jni-include-dir.patch
 Patch102:	db52-aarch64.patch
 
+BuildRequires:	make
 BuildRequires:	m4
 BuildRequires:	ed
 BuildRequires:	libtool

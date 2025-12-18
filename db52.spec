@@ -50,6 +50,7 @@ Patch102:	db52-aarch64.patch
 
 BuildRequires:	make
 BuildRequires:	m4
+BuildRequires:	autoconf
 BuildRequires:	ed
 BuildRequires:	libtool
 #BuildRequires:	systemtap-devel

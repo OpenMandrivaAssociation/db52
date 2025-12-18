@@ -1,3 +1,5 @@
+%global optflags %{optflags} -Wno-error -Wno-implicit-function-declaration
+
 %define sname db
 %define api 5.2
 %define binext %(echo %{api} | sed -e 's|\\.||g')

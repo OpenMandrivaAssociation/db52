@@ -549,5 +549,5 @@ mv %{buildroot}%{_bindir}/{dbsql,db%{api}_sql}
 %endif
 %{_libdir}/libdb_nss.so
 %{_libdir}/libdb_nss-5.so
-%{_libdir}/libdb_nss-%{api}.so
+#{_libdir}/libdb_nss-%{api}.so
 %endif

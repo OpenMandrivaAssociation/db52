@@ -539,7 +539,8 @@ mv %{buildroot}%{_bindir}/{dbsql,db%{api}_sql}
 
 %if %{with nss}
 %files -n %{libdbnss}
-/%{_lib}/libdb_nss-%{api}.so
+%{_lib}/libdb_nss-%{api}.so
+
 
 %files -n %{devdbnss}
 %dir %{_includedir}/db_nss
@@ -549,5 +550,5 @@ mv %{buildroot}%{_bindir}/{dbsql,db%{api}_sql}
 %endif
 %{_libdir}/libdb_nss.so
 %{_libdir}/libdb_nss-5.so
-#{_libdir}/libdb_nss-%{api}.so
+%exclude %{_libdir}/libdb_nss-%{api}.so
 %endif
